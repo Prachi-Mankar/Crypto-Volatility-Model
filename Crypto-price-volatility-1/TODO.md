@@ -64,3 +64,9 @@
 - [ ] Double-check `.gitignore`
 - [ ] Remove `.ipynb_checkpoints/`
 - [ ] Re-run notebooks for clean outputs
+
+
+
+<!-- git add TODO.md
+git commit -m "Update TODO progress"
+git push -->
