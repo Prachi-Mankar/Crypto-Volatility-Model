@@ -1,46 +1,32 @@
-# import os
-# os.makedirs('data', exist_ok=True)
-from pycoingecko import CoinGeckoAPI
+import requests
 import pandas as pd
-import time
 import os
+from datetime import datetime
 
-cg = CoinGeckoAPI()
+# 🛠 Create 'data' folder if missing
+os.makedirs("data", exist_ok=True)
 
-def fetch_price_data(coin_id, vs_currency='usd'):
-    # Get current UNIX time (end date) and subtract 365 days (start date)
-    end_time = int(time.time())
-    start_time = end_time - 365 * 24 * 60 * 60
+def fetch_fear_greed_index(days=365):
+    url = f"https://api.alternative.me/fng/?limit={days}&format=json"
+    response = requests.get(url)
+    data = response.json()
 
-    data = cg.get_coin_market_chart_range_by_id(
-        id=coin_id,
-        vs_currency=vs_currency,
-        from_timestamp=start_time,
-        to_timestamp=end_time
-    )
+    records = data['data']
+    df = pd.DataFrame(records)
+    df['timestamp'] = pd.to_datetime(df['timestamp'].astype(int), unit='s')
+    df.rename(columns={
+        'value': 'fear_greed_score',
+        'value_classification': 'sentiment_label',
+        'timestamp': 'date'
+    }, inplace=True)
 
-    prices = data['prices']
-    df = pd.DataFrame(prices, columns=['timestamp', f'{coin_id}_price'])
-    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
-    df = df.set_index('timestamp').resample('1D').mean().reset_index()
-    return df
+    df = df[['date', 'fear_greed_score', 'sentiment_label']]
+    df['fear_greed_score'] = df['fear_greed_score'].astype(int)
 
-# Fetch data for multiple coins
-coins = ['bitcoin', 'ethereum', 'solana', 'cardano']
-dataframes = []
+    return df.sort_values('date')
 
-for coin in coins:
-    try:
-        print(f"Fetching data for {coin}...")
-        df = fetch_price_data(coin)
-        dataframes.append(df)
-    except Exception as e:
-        print(f"Error fetching data for {coin}: {e}")
-
-# Save each coin's data to a separate CSV file
-os.makedirs('data', exist_ok=True)
-
-for coin, df in zip(coins, dataframes):
-    file_path = f'data/{coin}.csv'
-    df.to_csv(file_path, index=False)
-    print(f"✅ Saved {coin} data to {file_path}")
+# 📦 Save the data
+df_sentiment = fetch_fear_greed_index(365)
+df_sentiment.to_csv("data/fear_greed_sentiment.csv", index=False)
+print("✅ Sentiment data saved to data/fear_greed_sentiment.csv")
+print(df_sentiment.head())

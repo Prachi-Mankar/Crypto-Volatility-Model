@@ -4,50 +4,126 @@ This is my third project for data analysis
 # 🚀 Cryptocurrency Volatility Modeling and Recommendation Engine
 
 ## 📌 Project Overview
-This project aims to analyze and model the **price volatility of cryptocurrencies** using advanced statistical, mathematical, and machine learning techniques...
+This project analyzes and models **cryptocurrency price volatility** using statistical and machine learning models, with the end goal of building a **recommendation engine** based on volatility, returns, and investor risk appetite.
 
-🔍 Objectives
-Model and Forecast Volatility Using Stochastic Models
+---
 
-Applied GARCH and Stochastic Volatility models to Bitcoin, Ethereum, etc.
+## 🔍 Objectives
 
-Analyzed volatility persistence, clustering, and forecast error metrics.
+- **Model and Forecast Volatility Using Stochastic Models**
+  - Applied **GARCH(1,1)** to model conditional volatility for each coin.
+  - Compared with rolling volatility and forecasted future risk levels.
 
-Quantify the Impact of Sentiment on Volatility
+- **Cluster Cryptocurrencies Based on Risk and Return**
+  - Feature engineering on: average return, volatility, and sentiment.
+  - Used **PCA + K-Means** to identify meaningful crypto clusters.
 
-Extracted sentiment scores from crypto-related text data.
+- **Predict Volatility Regimes Using Machine Learning**
+  - XGBoost and Random Forest were used to classify time periods as high or low volatility based on lagged returns and engineered features.
 
-Performed regression analysis and Granger causality tests to assess influence.
+- **Recommend Top Cryptocurrencies**
+  - Final **ranking score** created using normalized volatility, return, and sentiment.
+  - Investor profiles mapped as: 🟢 Conservative, 🟡 Balanced, 🔴 Aggressive.
 
-Cluster Cryptocurrencies Based on Risk-Return and Sentiment
+---
 
-Engineered features: volatility, returns, Sharpe ratio, sentiment score.
+## 💡 Executive Summary
 
-Used K-Means and hierarchical clustering to identify crypto behavior groups.
+This project presents a full volatility-return modeling pipeline for key cryptocurrencies (Bitcoin, Ethereum, Solana, Cardano). Using GARCH models, clustering, and ML classification, we evaluate each coin and generate tailored recommendations. Feature importance was visualized to understand ML decisions, and final coin scores were computed.
 
-Predict Volatility Regimes Using Machine Learning
+### 📌 Key Outcomes:
 
-Classified time periods into high/low volatility using Random Forests and XGBoost.
+- **Bitcoin** had the best combination of low volatility and moderate returns — best for conservative investors.
+- **Cardano** had the highest normalized return but at significantly higher risk.
+- **Ethereum** showed moderate volatility with lowest return — not ideal.
+- **Solana** was highly volatile with modest returns, making it aggressive.
 
-Included lagged returns and sentiment as features.
+---
 
-Recommend Top Cryptocurrencies Based on Composite Score
+## 📈 Model Comparison Table
 
-Developed a scoring system combining sentiment trends, volatility, and Sharpe ratio.
+| Model           | Target                | MSE        | MAE        | R²     |
+|----------------|-----------------------|------------|------------|--------|
+| **XGBoost**     | Volatility Score      | 0.00089    | 0.0150     | -1.97  |
+| **RandomForest**| Volatility Score      | 0.00019    | 0.0110     | 0.367  |
+| **GARCH(1,1)**  | Volatility Forecast   | Evaluated via AIC, BIC, LL | ✔️ | ✔️ |
 
-Built a user-facing recommendation logic for "Safe", "Balanced", or "Aggressive" investors.
+---
 
-📊 Technologies Used
-Languages: Python (Pandas, NumPy, Scikit-learn)
+## 📊 Final Recommendation Score (Bar Chart)
 
-Stats/Modeling: ARCH, Statsmodels, XGBoost, GARCH
+![Crypto Recommendation Score](./results/c9b0b01d-62bf-4191-8852-3ab7f9acb21a.png)
 
-ML Models: Random Forest, Logistic Regression, LSTM (optional)
+| Coin     | Final Score | Recommendation       |
+|----------|-------------|----------------------|
+| Bitcoin  | 0.2158      | 🟢 Safe               |
+| Cardano  | 0.1000      | 🟡 Balanced           |
+| Solana   | 0.0054      | 🔴 Aggressive         |
+| Ethereum | -0.1057     | ⚠️ Not Recommended    |
 
-Visualization: Matplotlib, Seaborn, Plotly
+---
 
-Sentiment Analysis: VADER / TextBlob / HuggingFace Transformers
+## 🔍 Cluster Analysis: Returns, Volatility & Sentiment
 
-IDE: VS Code
+![Crypto Clusters](./results/770ad3af-3c0a-4a16-890f-49a01f50962f.png)
 
-Version Control: Git + GitHub
+| Coin     | Cluster | Volatility | Return  |
+|----------|---------|------------|---------|
+| Bitcoin  | 0       | 0.0261     | 0.0017  |
+| Ethereum | 0       | 0.0386     | 0.0000  |
+| Solana   | 0       | 0.0456     | 0.0013  |
+| Cardano  | 1       | 0.0617     | 0.0032  |
+
+---
+
+## 🧠 Feature Importance – Volatility Classification
+
+![Feature Importance](./results/b3549c90-0305-46f5-81b1-0a88d373ad62.png)
+
+Top features used by XGBoost for volatility classification:
+
+- `bitcoin_returns`
+- `ethereum_returns`
+- `solana_returns`
+- `cardano_returns`
+
+---
+
+## 💡 Business Insights Box
+
+| Coin     | Market Stability | Volatility Level  | Sensitivity to Events | Ideal For                  |
+|----------|------------------|-------------------|------------------------|----------------------------|
+| BTC      | High             | Low–Moderate      | Medium                 | Conservative Investors     |
+| ETH      | Medium           | Moderate          | High                   | Active Traders             |
+| SOL      | Low              | High              | Very High              | Risk-Tolerant Investors    |
+| ADA      | Low              | Very High (spikes)| Extremely High         | Event-Driven Trading       |
+
+---
+
+## 📊 Additional Insights
+
+- **Fear & Greed Score Correlation with Returns**:
+  - BTC: `0.2544`
+  - ETH: `0.2600`
+  - SOL: `0.1876`
+  - ADA: `0.1432`
+
+- **Classification Report (Volatility Regimes)**:
+  - Overall accuracy: **0.45**
+  - Best F1 score: **0.59** for class 3.0 (High Volatility)
+
+---
+
+## 🛠 Technologies Used
+
+- **Languages**: Python (Pandas, NumPy)
+- **Modeling Libraries**: `ARCH`, `statsmodels`, `XGBoost`, `scikit-learn`
+- **Visualization**: Matplotlib, Seaborn, Plotly
+- **Sentiment**: VADER (used partially)
+- **Development**: VS Code
+- **Version Control**: Git + GitHub
+
+---
+
+## 📂 Project Structure
+
