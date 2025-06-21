@@ -1,26 +1,36 @@
-# Ignore virtual environment folders
+# ================================
+# 🐍 Python Virtual Environment
+# ================================
 venv/
 venv_fix/
-.env/
 
-# Byte-compiled / optimized / DLL files
+# ================================
+# ⚙️ Python Bytecode & Caches
+# ================================
 __pycache__/
 *.py[cod]
-*$py.class
+*.ipynb_checkpoints
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+# ================================
+# 📈 Streamlit Logs & Config
+# ================================
+.streamlit/
 
-# VS Code settings
-.vscode/
+# ================================
+# 📒 Jupyter Notebook Runtime
+# ================================
+*.json
+*.log
 
-# macOS / Linux / Windows system files
+# ================================
+# 📂 Generated Files (Graphs, Models)
+# ================================
+results/
+models/
+
+# ================================
+# 💻 OS & Editor Junk Files
+# ================================
 .DS_Store
 Thumbs.db
 
-# Logs and temp files
-*.log
-*.tmp
-
-# Environment-specific config
-.env
