@@ -128,10 +128,17 @@ Top features used by XGBoost for volatility classification:
 ## 🛠 Technologies Used
 
 * **Languages**: Python (Pandas, NumPy)
-* **Modeling Libraries**: `ARCH`, `statsmodels`, `XGBoost`, `scikit-learn`
+* **Statistical Modeling**: GARCH via `ARCH`, Rolling Standard Deviation
+* **Machine Learning Models**:
+
+  * **XGBoost** for volatility regime prediction
+  * **Random Forest Regressor** for returns & volatility regression
+  * **K-Means** for clustering
+  * **PCA** for dimensionality reduction
 * **Visualization**: Matplotlib, Seaborn, Plotly
-* **Sentiment**: VADER (used partially)
-* **Development**: VS Code, Jupyter Notebook
+* **Sentiment Analysis**: VADER (partial usage)
+* **Data Source APIs**: yfinance, Alternative.me
+* **Development Environment**: Jupyter Notebook, VS Code
 * **Version Control**: Git + GitHub
 
 ---
@@ -169,8 +176,6 @@ pip install -r requirements.txt
 
 ## ✅ Credits
 
-Project by \[Your Name], combining financial time series modeling with machine learning and sentiment analysis.
+Project by , combining financial time series modeling with machine learning and sentiment analysis.
 
 ---
-
-Let me know if you'd like help deploying this on Hugging Face Spaces or Streamlit Cloud!
