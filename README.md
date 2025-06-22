@@ -176,6 +176,6 @@ pip install -r requirements.txt
 
 ## ✅ Credits
 
-Project by , combining financial time series modeling with machine learning and sentiment analysis.
+Project by Prachi Mankar, combining financial time series modeling with machine learning and sentiment analysis.
 
 ---
